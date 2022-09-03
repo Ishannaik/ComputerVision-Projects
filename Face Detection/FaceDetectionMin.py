@@ -7,7 +7,7 @@ pTime = 0
 cap = cv2.VideoCapture(2)
 
 mpFaceDetection = mp.solutions.face_detection
-mp.Draw = mp.solutions.drawing_utils
+mpDraw = mp.solutions.drawing_utils
 faceDetection = mpFaceDetection.FaceDetection(0.75)
 
 
@@ -19,11 +19,12 @@ while True:
     print(results)
     if results.detections:
         for id, detection in enumerate(results.detections):
-            #     print(id, detection)
-            #     print(detection.score)
-            print(detection.location_data.relative_bounding_box)
+            mpDraw.draw_detection(img, detection)
+            # print(id, detection)
+            # print(detection.score)
+            # print(detection.location_data.relative_bounding_box)
 
-    # FPS
+            # FPS
     cTime = time.time()  # redo dont understand need explanation
     fps = 1/(cTime-pTime)
     pTime = cTime
