@@ -19,10 +19,17 @@ while True:
     print(results)
     if results.detections:
         for id, detection in enumerate(results.detections):
-            mpDraw.draw_detection(img, detection)
+            #mpDraw.draw_detection(img, detection)
             # print(id, detection)
             # print(detection.score)
             # print(detection.location_data.relative_bounding_box)
+            bboxC = detection.location_data.relative_bounding_box
+            ih, iw, ic = img.shape
+            bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), \
+                int(bboxC.width * iw), int(bboxC.height * ih)
+            cv2.rectangle(img, bbox, (255, 0, 255), 4)
+            cv2.putText(img, f'{int(detection.score[0]*100)}%', (bbox[0], bbox[1] - 20),
+                        cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
 
             # FPS
     cTime = time.time()  # redo dont understand need explanation
